@@ -11,6 +11,7 @@ import java.util.List;
 
 @SpringBootApplication
 @RestController
+@RequestMapping("api/v1/users")
 public class Main {
     private final UserRepository userRepository;
     public Main(UserRepository userRepository) {
@@ -19,18 +20,18 @@ public class Main {
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
     }
-    @GetMapping("api/v1/users")
+    @GetMapping
     public List<User> getUsers(){
         return this.userRepository.findAll();
     }
-    @PostMapping("api/v1/user")
+    @PostMapping
     public ResponseEntity<User> createUser(@Validated @RequestBody User user) {
         return new ResponseEntity<User>(
                 userRepository.save(user),
                 HttpStatus.CREATED
         );
     }
-    @DeleteMapping("api/v1/user/{userId}")
+    @DeleteMapping("{userId}")
     public void deleteUse(@PathVariable("userId") Integer id){
         //find id
         User user = userRepository.getById(id);
