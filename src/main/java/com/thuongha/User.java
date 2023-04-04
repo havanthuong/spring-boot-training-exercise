@@ -1,8 +1,13 @@
 package com.thuongha;
 
 import java.util.Objects;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "users")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String userName;
     private Integer age;
@@ -26,7 +31,6 @@ public class User {
     public void setUserName(String userName) {
         this.userName = userName;
     }
-
     public Integer getAge() {
         return age;
     }
