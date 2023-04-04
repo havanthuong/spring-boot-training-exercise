@@ -14,7 +14,7 @@ public class Main {
 
     @GetMapping("/user")
     public User createUser() {
-        return new User(10,"HVT");
+        return new User(10,"HVT",12,"hgj");
     }
 
 }
