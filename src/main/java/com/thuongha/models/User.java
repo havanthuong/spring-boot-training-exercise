@@ -1,4 +1,4 @@
-package com.thuongha;
+package com.thuongha.models;
 
 import lombok.*;
 

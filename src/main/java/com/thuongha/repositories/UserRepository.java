@@ -1,6 +1,6 @@
-package com.thuongha;
+package com.thuongha.repositories;
 
-import com.thuongha.User;
+import com.thuongha.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
