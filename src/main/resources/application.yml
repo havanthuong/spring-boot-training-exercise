@@ -2,6 +2,8 @@ server:
   port: 8080
 
 spring:
+  liquibase:
+    change-log: classpath:/db/changelog/master.xml
   datasource:
     url: jdbc:mysql://localhost:3306/appcrud
     username: root
@@ -9,7 +11,7 @@ spring:
      driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: true
     properties:
       hibernate:

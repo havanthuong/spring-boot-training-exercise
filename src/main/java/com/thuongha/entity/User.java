@@ -1,8 +1,6 @@
-package com.thuongha.models;
+package com.thuongha.entity;
 
 import lombok.*;
-
-import java.util.Objects;
 import javax.persistence.*;
 
 @Data
@@ -12,6 +10,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @SequenceGenerator(
@@ -19,9 +18,16 @@ public class User {
             sequenceName = "user_id_sequence",
             allocationSize = 1
     )
-    private Integer id;
-    private String userName;
-    private Integer age;
-    private String email;
 
+    @Column(name = "id")
+    private Integer id;
+
+    @Column(name = "user_name")
+    private String userName;
+
+    @Column(name = "age")
+    private Integer age;
+
+    @Column(name = "email")
+    private String email;
 }
