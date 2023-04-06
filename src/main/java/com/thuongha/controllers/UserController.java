@@ -1,68 +1,50 @@
 package com.thuongha.controllers;
 
-import com.thuongha.models.User;
-import com.thuongha.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import com.thuongha.entity.User;
+import com.thuongha.service.UserService;
+import com.thuongha.service.dto.UserDto;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+
+@Data
+@AllArgsConstructor
 @RestController
 @RequestMapping("api/v1/users")
 public class UserController {
-//    @Autowired
-    private final UserRepository userRepository;
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+
+    private final UserService userService;
+
     @GetMapping
-    public List<User> getUsers(){
-        return this.userRepository.findAll();
+    public ResponseEntity<List<User>> getUsers(){
+        return ResponseEntity.ok(this.userService.getUsers());
     }
+
     @GetMapping("{userId}")
     public ResponseEntity<User> getUser(@PathVariable("userId") Integer id){
-        User user = this.userRepository.findById(id).orElse(null);
-        System.out.printf(user.toString());
-        if (user == null)
-            //return 404 bad request
-            return ResponseEntity.notFound().build();
-        return new ResponseEntity<User>(
-                user,
-                HttpStatus.CREATED
-        );
+        return ResponseEntity.ok(this.userService.getUser(id));
     }
+
     @PostMapping
-    public ResponseEntity<User> createUser(@Validated @RequestBody User user) {
-        return new ResponseEntity<User>(
-                this.userRepository.save(user),
-                HttpStatus.CREATED
-        );
+    public ResponseEntity<User> createUser(@Validated @RequestBody UserDto user) {
+        return ResponseEntity.ok(this.userService.createUser(user));
     }
+
     @DeleteMapping("{userId}")
-    public void deleteUse(@PathVariable("userId") Integer id){
-        //find id
-        User user = this.userRepository.getById(id);
-        if (user == null)
-            //return 404 bad request
-            return;
-        this.userRepository.deleteById(id);
+    public ResponseEntity<Void> deleteUse(@PathVariable("userId") Integer userId){
+        userService.deleteUser(userId);
+        return ResponseEntity.noContent().build();
     }
+
     @PutMapping("{userId}")
-    public void updateUse(
+    public ResponseEntity<User> updateUse(
             @PathVariable("userId") Integer id,
-            @RequestBody User request
+            @RequestBody UserDto request
     ){
-        //find id
-        User user = this.userRepository.getById(id);
-        if (user == null)
-            //return 404 bad request
-            return;
-        user.setAge(request.getAge());
-        user.setEmail(request.getEmail());
-        user.setUserName(request.getUserName());
-        this.userRepository.save(user);
+        return ResponseEntity.ok(this.userService.updateUser(id, request));
     }
 
 }
